@@ -1,200 +1,216 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-// Main component for the shopping list
 function FoodList() {
-    // State for the list of foods. Each food has sn, name, quantity, and amount.
-    const [foods, setFoods] = useState([
-        { sn: "", name: "", quantity: "", amount: "" },
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setDarkMode(prev => !prev);
+  };
+
+  const styles = {
+    page: {
+      backgroundColor: darkMode ? "#121212" : "#ffffff",
+      color: darkMode ? "#ffffff" : "#000000",
+      minHeight: "100vh",
+      padding: "20px",
+      transition: "all 1s ease",
+    },
+    button: {
+      padding: "10px 16px",
+      backgroundColor: darkMode ? "#333333" : "#dddddd",
+      color: darkMode ? "#ffffff" : "#000000",
+      border: "none",
+      borderRadius: "5px",
+      cursor: "pointer",
+      fontWeight: "bold",
+      marginBottom: "20px",
+      transition: "background-color 1s ease, color 0.3s ease",
+      boxShadow: darkMode ? "0 2px 5px rgba(123, 121, 121, 0.2)" : "0 2px 5px rgba(0, 0, 0, 0.1)",
+    },
+  };
+
+  const [foods, setFoods] = useState([
+    { sn: "", name: "", quantity: "", amount: "" },
+  ]);
+  const [addList, setAddList] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [amount, setAmount] = useState("");
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [editIndex, setEditIndex] = useState(null);
+  const [editRow, setEditRow] = useState({ name: "", quantity: "", amount: "" });
+
+  function handleAddList() {
+    if (addList.trim() === "") return;
+    setFoods((f) => [
+      ...f,
+      {
+        sn: f.length,
+        name: addList,
+        quantity: quantity || 1,
+        amount: amount || 0,
+      },
     ]);
-    // State for the input fields
-    const [addList, setAddList] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [amount, setAmount] = useState("");
-    // State for the total amount calculation
-    const [totalAmount, setTotalAmount] = useState(0);
+    setAddList("");
+    setQuantity("");
+    setAmount("");
+  }
 
-    // Add a new item to the foods list
-    function handleAddList() {
-        if (addList.trim() === "") return; // Prevent adding empty items
-        setFoods(f => [
-            ...f,
-            {
-                sn: f.length + 1, // Serial number based on list length
-                name: addList,
-                quantity: quantity || 1,
-                amount: amount || 0
-            }
-        ]);
-        // Reset input fields after adding
-        setAddList("");
-        setQuantity("");
-        setAmount("");
+  function handleRemoveItems(index) {
+    if (window.confirm("Are you sure you want to remove this item?"))
+      setFoods((prevFoods) => prevFoods.filter((_, i) => i !== index));
+  }
+
+  function clearList() {
+    if (window.confirm("Are you sure you want to clear the entire list?")) {
+      setFoods([]);
     }
+  }
 
-    // Remove an item from the list by index, with confirmation
-    function handleRemoveItems(index) {
-        if (window.confirm('Are you sure you want to remove this item?'))
-            setFoods(prevFoods => {
-                const newFoods = prevFoods.filter((_, i) => i !== index);
-                return newFoods;
-            });
-    }
-
-    // Clear the entire list, with confirmation
-    function clearList() {
-        if (window.confirm('Are you sure you want to clear the entire list?')) {
-            setFoods([]);
-        }
-    }
-
-    // Update totalAmount whenever foods changes
-    useEffect(() => {
-        const total = foods.reduce(
-            (sum, food) => sum + (parseFloat(food.amount) || 0),
-            0
-        );
-        setTotalAmount(total);
-    }, [foods]);
-
-    // State for editing rows
-    const [editIndex, setEditIndex] = useState(null);
-    const [editRow, setEditRow] = useState({ name: "", quantity: "", amount: "" });
-
-    // Start editing a row
-    function handleEdit(index) {
-        setEditIndex(index);
-        setEditRow({
-            name: foods[index].name,
-            quantity: foods[index].quantity,
-            amount: foods[index].amount,
-        });
-    }
-
-    // Update the row after editing
-    function handleUpdate(index) {
-        setFoods(foods.map((f, i) =>
-            i === index ? { ...f, ...editRow } : f
-        ));
-        setEditIndex(null);
-        setEditRow({ name: "", quantity: "", amount: "" });
-    }
-
-    return (
-        <>
-            <h2>MY SHOPPING LIST</h2>
-            {/* Table displaying the list of foods */}
-            <table border="1" cellPadding="8" cellSpacing="0">
-                <thead>
-                    <tr>
-                        <th>SN</th>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Amount (₦)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {foods.map((food, index) => (
-                        <tr key={index}>
-                            <td>{food.sn}</td>
-                            <td>
-                                {editIndex === index ? (
-                                    // Editable input for name
-                                    <input
-                                        type="text"
-                                        value={editRow.name}
-                                        onChange={e => setEditRow({ ...editRow, name: e.target.value })}
-                                    />
-                                ) : (
-                                    food.name
-                                )}
-                            </td>
-                            <td>
-                                {editIndex === index ? (
-                                    // Editable input for quantity
-                                    <input
-                                        type="text"
-                                        value={editRow.quantity}
-                                        onChange={e => setEditRow({ ...editRow, quantity: e.target.value })}
-                                    />
-                                ) : (
-                                    food.quantity
-                                )}
-                            </td>
-                            <td>
-                                {editIndex === index ? (
-                                    // Editable input for amount
-                                    <input
-                                        type="number"
-                                        value={editRow.amount}
-                                        onChange={e => setEditRow({ ...editRow, amount: e.target.value })}
-                                    />
-                                ) : (
-                                    food.amount
-                                )}
-                            </td>
-                            {/* Edit and Delete buttons */}
-                            {editIndex === index ? (
-                                <button className="editbtn" onClick={() => handleUpdate(index)}>Update</button>
-                            ) : (
-                                <button className="editbtn" onClick={() => handleEdit(index)}>Edit</button>
-                            )}
-                            <button className="deletbtn" onClick={() => handleRemoveItems(index)}>Delete</button>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            {/* Display the total amount */}
-            <h3 className="total">Total Amount: ₦{totalAmount}</h3><br />
-            <button onClick={clearList}>Clear List</button>
-            
-            {/* Form to add new items */}
-            <p><b>Add Item(s) to buy Below</b></p>
-            <label>
-                Items:{" "}
-                <input
-                    type="text"
-                    value={addList}
-                    onChange={e => setAddList(e.target.value)}
-                    placeholder="Rice, Milk, Fish, Garri etc...."
-                    onKeyDown={e => {
-                        if (e.key === "Enter") {
-                            handleAddList();
-                        }
-                    }}
-                />
-                <br />
-                Quantity:{" "}
-                <input
-                    type="any"
-                    value={quantity}
-                    onChange={e => setQuantity(e.target.value)}
-                    placeholder="Derica, Pcs, Kg, Paint, etc..."
-                    min="1"
-                    onKeyDown={e => {
-                        if (e.key === "Enter") {
-                            handleAddList();
-                        }
-                    }}
-                />
-                <br />
-                Amount: ₦
-                <input
-                    type="number"
-                    value={amount}
-                    onChange={e => setAmount(e.target.value)}
-                    placeholder="Enter Amount"
-                    onKeyDown={e => {
-                        if (e.key === "Enter") {
-                            handleAddList();
-                        }
-                    }}
-                />
-            </label>
-            <br />
-            <button className="Addbtn" onClick={handleAddList}>Add Item</button>
-        </>
+  useEffect(() => {
+    const total = foods.reduce(
+      (sum, food) => sum + (parseFloat(food.amount) || 0),
+      0
     );
+    setTotalAmount(total);
+  }, [foods]);
+
+  function handleEdit(index) {
+    setEditIndex(index);
+    setEditRow({
+      name: foods[index].name,
+      quantity: foods[index].quantity,
+      amount: foods[index].amount,
+    });
+  }
+
+  function handleUpdate(index) {
+    setFoods(
+      foods.map((f, i) => (i === index ? { ...f, ...editRow } : f))
+    );
+    setEditIndex(null);
+    setEditRow({ name: "", quantity: "", amount: "" });
+  }
+
+  return (
+    <div style={styles.page}>
+      <h2>MY SHOPPING LIST</h2>
+      <button onClick={toggleTheme} style={styles.button}>
+        {darkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
+      </button>
+
+      <table border="1" cellPadding="8" cellSpacing="0">
+        <thead>
+          <tr>
+            <th>SN</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Amount (₦)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {foods.map((food, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>
+                {editIndex === index ? (
+                  <input
+                    type="text"
+                    value={editRow.name}
+                    onChange={(e) =>
+                      setEditRow({ ...editRow, name: e.target.value })
+                    }
+                  />
+                ) : (
+                  food.name
+                )}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input
+                    type="text"
+                    value={editRow.quantity}
+                    onChange={(e) =>
+                      setEditRow({ ...editRow, quantity: e.target.value })
+                    }
+                  />
+                ) : (
+                  food.quantity
+                )}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <input
+                    type="number"
+                    value={editRow.amount}
+                    onChange={(e) =>
+                      setEditRow({ ...editRow, amount: e.target.value })
+                    }
+                  />
+                ) : (
+                  food.amount
+                )}
+              </td>
+              <td>
+                {editIndex === index ? (
+                  <button onClick={() => handleUpdate(index)}>Update</button>
+                ) : (
+                  <button onClick={() => handleEdit(index)}>Edit</button>
+                )}
+                <button onClick={() => handleRemoveItems(index)}>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3>Total Amount: ₦{totalAmount}</h3>
+      <button onClick={clearList}>Clear List</button>
+
+      <p>
+        <b>Add Item(s) to buy Below</b>
+      </p>
+      <label>
+        Items:{" "}
+        <input
+          type="text"
+          value={addList}
+          onChange={(e) => setAddList(e.target.value)}
+          placeholder="Rice, Milk, Fish, Garri etc...."
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleAddList();
+          }}
+
+          
+        />
+        <br />
+        Quantity:{" "}
+        <input
+          type="text"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          placeholder="Derica, Pcs, Kg, Paint, etc..."
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleAddList();
+          }}
+        />
+        <br />
+        Amount: ₦
+        <input
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Enter Amount"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleAddList();
+          }}
+        />
+      </label>
+      <br />
+      <button onClick={handleAddList}>Add Item</button>
+    </div>
+  );
 }
 
 export default FoodList;
