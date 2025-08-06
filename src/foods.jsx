@@ -105,6 +105,7 @@ function FoodList() {
             <th>Name</th>
             <th>Quantity</th>
             <th>Amount (₦)</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -156,8 +157,8 @@ function FoodList() {
                 ) : (
                   <button onClick={() => handleEdit(index)}>Edit</button>
                 )}
-                <button onClick={() => handleRemoveItems(index)}>
-                  Delete
+                <button className="deletebtn">
+                  <img onClick={() => handleRemoveItems(index)} className="delicon" src="../src/assets/delete.png" alt="Delete"/>
                 </button>
               </td>
             </tr>
@@ -172,7 +173,7 @@ function FoodList() {
         <b>Add Item(s) to buy Below</b>
       </p>
       <label>
-        Items:{" "}
+        <b>Items:</b>{" "}
         <input
           type="text"
           value={addList}
@@ -185,7 +186,7 @@ function FoodList() {
           
         />
         <br />
-        Quantity:{" "}
+        <b>Quantity:</b>{" "}
         <input
           type="text"
           value={quantity}
@@ -196,7 +197,7 @@ function FoodList() {
           }}
         />
         <br />
-        Amount: ₦
+        <b>Amount: ₦</b>
         <input
           type="number"
           value={amount}
@@ -208,7 +209,8 @@ function FoodList() {
         />
       </label>
       <br />
-      <button onClick={handleAddList}>Add Item</button>
+      <button onClick={handleAddList}>
+      <img className="addicon" src="../src/assets/add-to-cart.png"/> <br /> Add Item</button>
     </div>
   );
 }
