@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function FoodList() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   const toggleTheme = () => {
     setDarkMode(prev => !prev);
