@@ -157,8 +157,8 @@ function FoodList() {
                 ) : (
                   <button onClick={() => handleEdit(index)}>Edit</button>
                 )}
-                <button className="deletebtn">
-                  <img onClick={() => handleRemoveItems(index)} className="delicon" src="../src/assets/delete.png" alt="Delete"/>
+                <button className="deletebtn" onClick={() => handleRemoveItems(index)}>
+                  <img className="delicon" src="../src/assets/delete.png" alt="Delete"/>
                 </button>
               </td>
             </tr>
