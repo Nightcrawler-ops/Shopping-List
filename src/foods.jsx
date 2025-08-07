@@ -1,7 +1,7 @@
-import { useEffect, useState, useRef } from "react";
-import InstallPWAButton from "./InstallPWAButton";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { useEffect, useState, useRef } from "react";
+import InstallPWAButton from "./InstallPWAButton";
 
 function FoodList() {
   const [darkMode, setDarkMode] = useState(false);
@@ -68,9 +68,9 @@ const handleDownloadSnapshot = () => {
 
   // Title
   doc.setFontSize(14);
-  doc.text(`Shopping List - ${formattedDate}`, 14, 15);
+  doc.text(`Shopping List - ${formattedDate}`, 14, 20);
 
-  // Table data
+  // Table columns and rows
   const tableColumn = ["Item", "Quantity", "Amount (₦)"];
   const tableRows = foods.map(item => [
     item.name,
@@ -78,24 +78,24 @@ const handleDownloadSnapshot = () => {
     item.amount.toLocaleString(),
   ]);
 
-  // Add total row
-  tableRows.push(["", "Total", totalAmount.toLocaleString()]);
+  // Add a total row
+  tableRows.push(["", "Total", `₦${totalAmount.toLocaleString()}`]);
 
-  // Draw table
+  // Draw the table using autoTable
   doc.autoTable({
-    startY: 25,
+    startY: 30,
     head: [tableColumn],
     body: tableRows,
-    theme: "striped",
+    theme: "grid",
     styles: { fontSize: 11 },
     headStyles: { fillColor: [0, 122, 204] },
     margin: { bottom: 20 },
   });
 
-  // Footer (mini advert)
+  // Footer: Mini Advert / Branding
   const pageHeight = doc.internal.pageSize.height;
   doc.setFontSize(9);
-  doc.setTextColor(150); // subtle gray
+  doc.setTextColor(100);
   doc.text(
     "Developed by Ayotech | https://ayotechportfolio.vercel.app",
     doc.internal.pageSize.width / 2,
@@ -103,7 +103,7 @@ const handleDownloadSnapshot = () => {
     { align: "center" }
   );
 
-  // Save PDF
+  // Save the PDF file
   doc.save(`Shopping_List_${formattedDate}.pdf`);
 };
 
