@@ -113,7 +113,7 @@ return (
         {foods.length === 0 ? (
           <tr>
             <td colSpan="5" style={{ textAlign: "center", padding: "20px", fontStyle: "italic", color: "gray" }}>
-              🛒 Your shopping list is empty. Add something below to get started!
+              🛒 Your shopping list is empty. Add items below to get started!
             </td>
           </tr>
         ) : (
