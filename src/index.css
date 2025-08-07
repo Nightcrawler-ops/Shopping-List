@@ -4,7 +4,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #313131;
+  background-color: #1e1e1e;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -24,13 +24,7 @@ body {
   min-height: 100vh;
   padding: 20px;
   box-sizing: border-box;
-  overflow-x: scroll;
-}
-
-.container {
-  flex: 1;
-  width: 100%;
-  max-width: 900px;
+  max-width: 100%;
 }
 
 h2 {
@@ -151,6 +145,7 @@ button .delicon {
   table {
     font-size: 0.9em;
     color: #f0eeee;
+    overflow-x: scroll;
   }
 
   label input {
