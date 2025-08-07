@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import InstallPWAButton from "./InstallPWAButton";
 
 function FoodList() {
   const [darkMode, setDarkMode] = useState(true);
@@ -97,7 +98,7 @@ return (
 
     <button onClick={toggleTheme} style={styles.button}>
       {darkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
-    </button>
+    </button> <InstallPWAButton />
 
     <table border="1" cellPadding="8" cellSpacing="0">
       <thead>

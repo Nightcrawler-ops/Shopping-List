@@ -2,7 +2,7 @@ import FoodList from "./foods";
 import Footer from "./footer";
 
 function App() {
-  return(
+  return (
     <>
       <FoodList />
       <Footer />
