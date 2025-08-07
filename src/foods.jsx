@@ -4,7 +4,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 function FoodList() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
   const [foods, setFoods] = useState([]);
   const [addList, setAddList] = useState("");
   const [quantity, setQuantity] = useState("");
