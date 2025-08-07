@@ -10,6 +10,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: scroll;
 }
 
 body {
@@ -24,6 +25,11 @@ body {
   min-height: 100vh;
   padding: 20px;
   box-sizing: border-box;
+  max-width: 100%;
+}
+
+.container {
+  flex: 1;
   max-width: 100%;
 }
 
