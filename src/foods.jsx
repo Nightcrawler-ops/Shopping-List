@@ -180,7 +180,7 @@ return (
 
     <p><b>Add Item(s) to buy Below</b></p>
     <label>
-      <b>Items:</b>{" "}
+      <b>Items: </b>{" "}
       <input
         type="text"
         value={addList}
@@ -191,7 +191,7 @@ return (
         }}
       />
       <br />
-      <b>Quantity:</b>{" "}
+      <b>Quantity: </b>{" "}
       <input
         type="text"
         value={quantity}
@@ -202,7 +202,7 @@ return (
         }}
       />
       <br />
-      <b>Amount: ₦</b>
+      <b>Amount: ₦ </b>
       <input
         type="number"
         value={amount}
