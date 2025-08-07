@@ -234,7 +234,7 @@ function FoodList() {
       )}
 
       <div>
-        <h4>Load Saved List:</h4>
+        <h4>Saved List:</h4>
         {Object.keys(savedLists).length === 0 && <p>No saved lists found.</p>}
         {Object.keys(savedLists).map(name => (
           <div key={name} style={{ marginBottom: "8px" }}>
