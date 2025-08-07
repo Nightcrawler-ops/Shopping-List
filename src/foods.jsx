@@ -93,7 +93,7 @@ function FoodList() {
 
   return (
     <div style={styles.page}>
-      <h2><img className="headericon" src="../src/assets/add-to-cart.png" /> MY SHOPPING LIST </h2>
+      <h2><img className="headericon" src="add-to-cart.png" /> MY SHOPPING LIST </h2>
       <button onClick={toggleTheme} style={styles.button}>
         {darkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
       </button>
@@ -156,12 +156,12 @@ function FoodList() {
                   <button onClick={() => handleUpdate(index)}>Update</button>
                 ) : (
                   <button onClick={() => handleEdit(index)}>
-                    <img className="editicon" src="../src/assets/edit.png" alt="edit"/>
+                    <img className="editicon" src="edit.png" alt="edit"/>
                   </button>
 
                 )}
                 <button className="deletebtn" onClick={() => handleRemoveItems(index)}>
-                  <img className="delicon" src="../src/assets/delete.png" alt="Delete"/>
+                  <img className="delicon" src="delete.png" alt="Delete"/>
                 </button>
               </td>
             </tr>
@@ -213,7 +213,7 @@ function FoodList() {
       </label>
       <br />
       <button onClick={handleAddList}>
-      <img className="addicon" src="../src/assets/add-to-cart.png"/> <br /> Add Item</button>
+      <img className="addicon" src="add-to-cart.png"/> <br /> Add Item</button>
     </div>
   );
 }
