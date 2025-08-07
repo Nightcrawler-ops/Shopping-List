@@ -144,18 +144,10 @@ button .delicon {
 }
 
 @media (max-width: 768px) {
-  :root {
-    overflow: auto;
-  }
-  body {
-    padding: 0px;
-  }
-  .container {
-  flex: 1;
-  width: 100%;
-  max-width: auto;
-}
 
+  body {
+    display: flex;
+  }
   table {
     font-size: 0.9em;
     color: #f0eeee;
