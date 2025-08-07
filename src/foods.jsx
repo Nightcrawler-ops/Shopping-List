@@ -75,13 +75,22 @@ function FoodList() {
     window.open(`https://wa.me/?text=${body}`, "_blank");
   };
 
-  const handleEmailShare = () => {
-    const subject = encodeURIComponent("My Shopping List");
-    const body = encodeURIComponent(
-      foods.map(f => `${f.name} (${f.quantity}) - ₦${f.amount}`).join("\n") + `\n\nTotal: ₦${totalAmount}`
-    );
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
-  };
+const handleEmailShare = () => {
+  const bodyContent = foods
+    .map(f => `${f.name} (${f.quantity}) - ₦${f.amount}`)
+    .join("\n") + `\n\nTotal: ₦${totalAmount}`;
+
+  if (navigator.share) {
+    navigator
+      .share({
+        title: "My Shopping List",
+        text: bodyContent,
+      })
+      .catch(error => console.error("Error sharing:", error));
+  } else {
+    alert("Sharing is not supported on this device.");
+  }
+};
 
   const handleSaveList = () => {
     const name = prompt("Enter a name for this list:");
@@ -144,7 +153,7 @@ function FoodList() {
       <h2>
         <img className="headericon" src="/shopping-list2.png" alt="List Icon" /> MY SHOPPING LIST
       </h2>
-      <button onClick={toggleTheme}>{darkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}</button>
+      <button onClick={toggleTheme}>{darkMode ? "To ☀️ Light Mode" : "To 🌙 Dark Mode"}</button>
       <InstallPWAButton />
 
       <div ref={listRef}>
@@ -229,7 +238,7 @@ function FoodList() {
           <button onClick={handleSaveList}>💾 Save This List</button>
           <br />
           <button onClick={handleShare}>📤 Share on WhatsApp</button>
-          <button onClick={handleEmailShare}>✉️ Share via Email</button>
+          <button onClick={handleEmailShare}> 📤 Share List</button>
         </>
       )}
 
