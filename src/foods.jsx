@@ -180,7 +180,7 @@ return (
 
     <p><b>Add Item(s) to buy Below</b></p>
     <label>
-      <b>Items: </b>{" "}
+      <b>Items: </b>{" "} <br/ >
       <input
         type="text"
         value={addList}
@@ -192,7 +192,7 @@ return (
       />
       <br />
       <b>Quantity: </b>{" "}
-      <input
+      <br/ > <input
         type="text"
         value={quantity}
         onChange={(e) => setQuantity(e.target.value)}
@@ -203,7 +203,7 @@ return (
       />
       <br />
       <b>Amount: ₦ </b>
-      <input
+       <br/ > <input
         type="number"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
