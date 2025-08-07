@@ -143,23 +143,3 @@ button .delicon {
   object-fit: contain;
 }
 
-@media (max-width: 768px) {
-
-  body {
-    display: flex;
-  }
-  table {
-    font-size: 0.9em;
-    color: #f0eeee;
-  }
-
-  label input {
-    max-width: 90%;
-    height: 40px;
-  }
-
-  button {
-    padding: 0.5em 0.8em;
-    font-size: 0.95em;
-  }
-}
