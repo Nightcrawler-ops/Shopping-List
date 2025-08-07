@@ -144,6 +144,9 @@ button .delicon {
 }
 
 @media (max-width: 768px) {
+  :root {
+    overflow: auto;
+  }
   body {
     padding: 0px;
   }
@@ -156,7 +159,6 @@ button .delicon {
   table {
     font-size: 0.9em;
     color: #f0eeee;
-    overflow-x: scroll;
   }
 
   label input {
