@@ -10,6 +10,9 @@ function Footer(){
             </a>
             <a href="https://www.tiktok.com/@ayotech_" target="_blank">
             <img className="icon" src="../src/assets/tiktok-color-icon.svg" alt="Tiktok Page"/>
+            </a>
+            <a href="https://wa.me/+2347063788674" target="_blank">
+            <img className="icon" src="../src/assets/whatsapp.png" alt="Whatsapp"/>
             </a>     
         </>
     );

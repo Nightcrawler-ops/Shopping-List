@@ -29,6 +29,11 @@ h2 {
   margin-bottom: 5px;
 }
 
+.headericon{
+  width: 2em;
+  height: 2em;
+}
+
 table {
   width: 100%;
   max-width: 900px;
@@ -93,11 +98,17 @@ button:hover {
   background-color: #3c46ff;
 }
 
-.delicon {
+.editicon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+button .delicon {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  position: inherit;
+
 }
 
 .deletebtn{

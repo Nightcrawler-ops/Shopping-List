@@ -93,7 +93,7 @@ function FoodList() {
 
   return (
     <div style={styles.page}>
-      <h2>MY SHOPPING LIST</h2>
+      <h2><img className="headericon" src="../src/assets/add-to-cart.png" /> MY SHOPPING LIST </h2>
       <button onClick={toggleTheme} style={styles.button}>
         {darkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
       </button>
@@ -155,7 +155,10 @@ function FoodList() {
                 {editIndex === index ? (
                   <button onClick={() => handleUpdate(index)}>Update</button>
                 ) : (
-                  <button onClick={() => handleEdit(index)}>Edit</button>
+                  <button onClick={() => handleEdit(index)}>
+                    <img className="editicon" src="../src/assets/edit.png" alt="edit"/>
+                  </button>
+
                 )}
                 <button className="deletebtn" onClick={() => handleRemoveItems(index)}>
                   <img className="delicon" src="../src/assets/delete.png" alt="Delete"/>
