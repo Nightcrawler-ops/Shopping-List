@@ -47,15 +47,14 @@ table {
   width: 100%;
   max-width: 900px;
   border-collapse: collapse;
-  background-color: #2c2c2c;
-  border: 1px solid #444;
-  color: #f0f0f0;
+  border: 2px solid #1d216e;
   overflow-x: scroll;
+  margin-top: 10px;
 }
 
 th, td {
-  padding: 12px 16px;
-  border: 1px solid #444;
+  padding: 1px 16px;
+  border: 2px solid #1d216e;
   text-align: center;
 }
 
@@ -73,6 +72,24 @@ td input {
 }
 
 label input {
+  margin: 6px 0;
+  min-height: 40px;
+  width: 100%;
+  max-width: 350px;
+  border-radius: 7px;
+  padding: 6px 10px;
+  background-color: #b8b8b8;
+  color: #000000;
+
+  outline: none;
+  margin-bottom: 25px;
+}
+
+label input:hover {
+    border: 1.5px solid #1d216e;
+}
+
+input {
   margin: 6px 0;
   min-height: 40px;
   width: 100%;
@@ -102,6 +119,7 @@ button {
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin: 5px;
 }
 
 button:hover {
