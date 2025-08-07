@@ -74,7 +74,7 @@ td input {
 
 label input {
   margin: 6px 0;
-  min-height: 30px;
+  min-height: 40px;
   width: 100%;
   max-width: 300px;
   border-radius: 6px;
@@ -145,8 +145,13 @@ button .delicon {
 
 @media (max-width: 768px) {
   body {
-    padding: 20px 10px;
+    padding: 0px;
   }
+  .container {
+  flex: 1;
+  width: 100%;
+  max-width: auto;
+}
 
   table {
     font-size: 0.9em;
@@ -155,7 +160,8 @@ button .delicon {
   }
 
   label input {
-    max-width: 100%;
+    max-width: 90%;
+    height: 40px;
   }
 
   button {
