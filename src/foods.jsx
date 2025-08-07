@@ -93,7 +93,7 @@ function FoodList() {
 return (
   <div style={styles.page} className="container">
     <h2>
-      <img className="headericon" src="/add-to-cart.png" alt="Cart Icon" /> MY SHOPPING LIST
+      <img className="headericon" src="/shopping-list2.png" alt="List Icon" /> MY SHOPPING LIST
     </h2>
 
     <button onClick={toggleTheme} style={styles.button}>
