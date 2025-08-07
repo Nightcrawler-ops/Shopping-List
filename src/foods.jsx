@@ -280,10 +280,10 @@ const handleEmailShare = () => {
           <h3>Total Amount: ₦{totalAmount}</h3>
           <button onClick={clearList}>Clear List</button>
           <button onClick={handleDownloadSnapshot}>📥 Download List</button>
-          <button onClick={handleSaveList}>💾 Save This List</button>
+          <button onClick={handleSaveList}>💾 Save List</button>
           <br />
           <button onClick={handleShare}>📤 Share on WhatsApp</button>
-          <button onClick={handleEmailShare}> 📤 Share List</button>
+          <button onClick={handleEmailShare}> 📤 Share</button>
         </>
       )}
 
