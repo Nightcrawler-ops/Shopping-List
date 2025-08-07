@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import InstallPWAButton from "./InstallPWAButton";
-import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 function FoodList() {
   const [darkMode, setDarkMode] = useState(false);
@@ -57,17 +57,55 @@ function FoodList() {
     setEditRow({ name: "", quantity: "", amount: "" });
   };
 
-  const handleDownloadSnapshot = async () => {
-    const element = listRef.current;
-    const canvas = await html2canvas(element);
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF();
-    const today = new Date();
-    const formattedDate = today.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-    pdf.text(`Shopping List - ${formattedDate}`, 10, 10);
-    pdf.addImage(imgData, "PNG", 10, 20, 190, 0);
-    pdf.save(`Shopping_List_${formattedDate}.pdf`);
-  };
+const handleDownloadSnapshot = () => {
+  const doc = new jsPDF();
+  const today = new Date();
+  const formattedDate = today.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  // Title
+  doc.setFontSize(14);
+  doc.text(`Shopping List - ${formattedDate}`, 14, 15);
+
+  // Table data
+  const tableColumn = ["Item", "Quantity", "Amount (₦)"];
+  const tableRows = foods.map(item => [
+    item.name,
+    item.quantity,
+    item.amount.toLocaleString(),
+  ]);
+
+  // Add total row
+  tableRows.push(["", "Total", totalAmount.toLocaleString()]);
+
+  // Draw table
+  doc.autoTable({
+    startY: 25,
+    head: [tableColumn],
+    body: tableRows,
+    theme: "striped",
+    styles: { fontSize: 11 },
+    headStyles: { fillColor: [0, 122, 204] },
+    margin: { bottom: 20 },
+  });
+
+  // Footer (mini advert)
+  const pageHeight = doc.internal.pageSize.height;
+  doc.setFontSize(9);
+  doc.setTextColor(150); // subtle gray
+  doc.text(
+    "Developed by Ayotech | https://ayotechportfolio.vercel.app",
+    doc.internal.pageSize.width / 2,
+    pageHeight - 10,
+    { align: "center" }
+  );
+
+  // Save PDF
+  doc.save(`Shopping_List_${formattedDate}.pdf`);
+};
 
   const handleShare = () => {
     const text = foods.map(f => `${f.name} (${f.quantity}) - ₦${f.amount}`).join("\n");
