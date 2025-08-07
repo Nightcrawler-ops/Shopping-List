@@ -29,9 +29,7 @@ function FoodList() {
     },
   };
 
-  const [foods, setFoods] = useState([
-    { sn: "", name: "", quantity: "", amount: "" },
-  ]);
+  const [foods, setFoods] = useState([]);
   const [addList, setAddList] = useState("");
   const [quantity, setQuantity] = useState("");
   const [amount, setAmount] = useState("");
@@ -91,25 +89,35 @@ function FoodList() {
     setEditRow({ name: "", quantity: "", amount: "" });
   }
 
-  return (
-    <div style={styles.page}>
-      <h2><img className="headericon" src="/add-to-cart.png" /> MY SHOPPING LIST </h2>
-      <button onClick={toggleTheme} style={styles.button}>
-        {darkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
-      </button>
+return (
+  <div style={styles.page} className="container">
+    <h2>
+      <img className="headericon" src="/add-to-cart.png" alt="Cart Icon" /> MY SHOPPING LIST
+    </h2>
 
-      <table border="1" cellPadding="8" cellSpacing="0">
-        <thead>
+    <button onClick={toggleTheme} style={styles.button}>
+      {darkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}
+    </button>
+
+    <table border="1" cellPadding="8" cellSpacing="0">
+      <thead>
+        <tr>
+          <th>SN</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Amount (₦)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {foods.length === 0 ? (
           <tr>
-            <th>SN</th>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Amount (₦)</th>
-            <th>Action</th>
+            <td colSpan="5" style={{ textAlign: "center", padding: "20px", fontStyle: "italic", color: "gray" }}>
+              🛒 Your shopping list is empty. Add something below to get started!
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {foods.map((food, index) => (
+        ) : (
+          foods.map((food, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>
@@ -117,9 +125,7 @@ function FoodList() {
                   <input
                     type="text"
                     value={editRow.name}
-                    onChange={(e) =>
-                      setEditRow({ ...editRow, name: e.target.value })
-                    }
+                    onChange={(e) => setEditRow({ ...editRow, name: e.target.value })}
                   />
                 ) : (
                   food.name
@@ -130,9 +136,7 @@ function FoodList() {
                   <input
                     type="text"
                     value={editRow.quantity}
-                    onChange={(e) =>
-                      setEditRow({ ...editRow, quantity: e.target.value })
-                    }
+                    onChange={(e) => setEditRow({ ...editRow, quantity: e.target.value })}
                   />
                 ) : (
                   food.quantity
@@ -143,9 +147,7 @@ function FoodList() {
                   <input
                     type="number"
                     value={editRow.amount}
-                    onChange={(e) =>
-                      setEditRow({ ...editRow, amount: e.target.value })
-                    }
+                    onChange={(e) => setEditRow({ ...editRow, amount: e.target.value })}
                   />
                 ) : (
                   food.amount
@@ -156,66 +158,68 @@ function FoodList() {
                   <button onClick={() => handleUpdate(index)}>Update</button>
                 ) : (
                   <button onClick={() => handleEdit(index)}>
-                    <img className="editicon" src="/edit.png" alt="edit"/>
+                    <img className="editicon" src="/edit.png" alt="edit" />
                   </button>
-
                 )}
                 <button className="deletebtn" onClick={() => handleRemoveItems(index)}>
-                  <img className="delicon" src="/delete.png" alt="Delete"/>
+                  <img className="delicon" src="/delete.png" alt="Delete" />
                 </button>
               </td>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          ))
+        )}
+      </tbody>
+    </table>
 
-      <h3>Total Amount: ₦{totalAmount}</h3>
-      <button onClick={clearList}>Clear List</button>
+    {foods.length > 0 && (
+      <>
+        <h3>Total Amount: ₦{totalAmount}</h3>
+        <button onClick={clearList}>Clear List</button>
+      </>
+    )}
 
-      <p>
-        <b>Add Item(s) to buy Below</b>
-      </p>
-      <label>
-        <b>Items:</b>{" "}
-        <input
-          type="text"
-          value={addList}
-          onChange={(e) => setAddList(e.target.value)}
-          placeholder="Rice, Milk, Fish, Garri etc...."
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleAddList();
-          }}
-
-          
-        />
-        <br />
-        <b>Quantity:</b>{" "}
-        <input
-          type="text"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          placeholder="Derica, Pcs, Kg, Paint, etc..."
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleAddList();
-          }}
-        />
-        <br />
-        <b>Amount: ₦</b>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="Enter Amount"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleAddList();
-          }}
-        />
-      </label>
+    <p><b>Add Item(s) to buy Below</b></p>
+    <label>
+      <b>Items:</b>{" "}
+      <input
+        type="text"
+        value={addList}
+        onChange={(e) => setAddList(e.target.value)}
+        placeholder="Rice, Milk, Fish, Garri etc...."
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleAddList();
+        }}
+      />
       <br />
-      <button onClick={handleAddList}>
-      <img className="addicon" src="/add-to-cart.png"/> <br /> Add Item</button>
-    </div>
-  );
+      <b>Quantity:</b>{" "}
+      <input
+        type="text"
+        value={quantity}
+        onChange={(e) => setQuantity(e.target.value)}
+        placeholder="Derica, Pcs, Kg, Paint, etc..."
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleAddList();
+        }}
+      />
+      <br />
+      <b>Amount: ₦</b>
+      <input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        placeholder="Enter Amount"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleAddList();
+        }}
+      />
+    </label>
+    <br />
+    <button onClick={handleAddList}>
+      <img className="addicon" src="/add-to-cart.png" alt="Add" /> <br /> Add Item
+    </button>
+  </div>
+);
 }
+
 
 export default FoodList;
