@@ -1,5 +1,6 @@
-import jsPDF from "jspdf";
-import "jspdf-autotable";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable"; // ✅ NO need to register manually
+
 import { useEffect, useState, useRef } from "react";
 import InstallPWAButton from "./InstallPWAButton";
 
@@ -57,8 +58,19 @@ function FoodList() {
     setEditRow({ name: "", quantity: "", amount: "" });
   };
 
-const handleDownloadSnapshot = () => {
+const handleDownloadSnapshot = async () => {
   const doc = new jsPDF();
+
+  // Optional: Load logo
+  const logo = new Image();
+  logo.src = "/logo.png"; // ✅ Replace with your actual logo path
+  await new Promise(resolve => {
+    logo.onload = resolve;
+  });
+
+  // Add logo to PDF header
+  doc.addImage(logo, "PNG", 10, 10, 30, 15);
+
   const today = new Date();
   const formattedDate = today.toLocaleDateString("en-GB", {
     day: "numeric",
@@ -66,11 +78,9 @@ const handleDownloadSnapshot = () => {
     year: "numeric",
   });
 
-  // Title
   doc.setFontSize(14);
-  doc.text(`Shopping List - ${formattedDate}`, 14, 20);
+  doc.text(`Shopping List - ${formattedDate}`, 50, 20); // Align next to logo
 
-  // Table columns and rows
   const tableColumn = ["Item", "Quantity", "Amount (₦)"];
   const tableRows = foods.map(item => [
     item.name,
@@ -78,11 +88,9 @@ const handleDownloadSnapshot = () => {
     item.amount.toLocaleString(),
   ]);
 
-  // Add a total row
   tableRows.push(["", "Total", `₦${totalAmount.toLocaleString()}`]);
 
-  // Draw the table using autoTable
-  doc.autoTable({
+  autoTable(doc, {
     startY: 30,
     head: [tableColumn],
     body: tableRows,
@@ -92,7 +100,7 @@ const handleDownloadSnapshot = () => {
     margin: { bottom: 20 },
   });
 
-  // Footer: Mini Advert / Branding
+  // Add footer branding
   const pageHeight = doc.internal.pageSize.height;
   doc.setFontSize(9);
   doc.setTextColor(100);
@@ -103,7 +111,6 @@ const handleDownloadSnapshot = () => {
     { align: "center" }
   );
 
-  // Save the PDF file
   doc.save(`Shopping_List_${formattedDate}.pdf`);
 };
 
