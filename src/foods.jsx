@@ -105,7 +105,7 @@ const handleDownloadSnapshot = async () => {
   doc.setFontSize(9);
   doc.setTextColor(100);
   doc.text(
-    "Developed by Ayotech | https://ayotechportfolio.vercel.app",
+    "I made this shopping list using *My Shopping List App*. You can make yours too using the app: https://shopping-list-opal.vercel.app/",
     doc.internal.pageSize.width / 2,
     pageHeight - 10,
     { align: "center" }
@@ -114,16 +114,18 @@ const handleDownloadSnapshot = async () => {
   doc.save(`Shopping_List_${formattedDate}.pdf`);
 };
 
-  const handleShare = () => {
-    const text = foods.map(f => `${f.name} (${f.quantity}) - ₦${f.amount}`).join("\n");
-    const body = encodeURIComponent(`My Shopping List:\n\n${text}\n\nTotal: ₦${totalAmount}`);
-    window.open(`https://wa.me/?text=${body}`, "_blank");
-  };
+const appNote = "\n\nI made this shopping list using *My Shopping List App*. You can make yours too using the app: https://shopping-list-opal.vercel.app/";
+
+const handleShare = () => {
+  const text = foods.map(f => `${f.name} (${f.quantity}) - ₦${f.amount}`).join("\n");
+  const body = encodeURIComponent(`My Shopping List:\n\n${text}\n\nTotal: ₦${totalAmount}${appNote}`);
+  window.open(`https://wa.me/?text=${body}`, "_blank");
+};
 
 const handleEmailShare = () => {
   const bodyContent = foods
     .map(f => `${f.name} (${f.quantity}) - ₦${f.amount}`)
-    .join("\n") + `\n\nTotal: ₦${totalAmount}`;
+    .join("\n") + `\n\nTotal: ₦${totalAmount}${appNote}`;
 
   if (navigator.share) {
     navigator
