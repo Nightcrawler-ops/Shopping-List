@@ -2,29 +2,39 @@ import { useEffect, useState } from "react";
 
 function InstallPWAButton() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [visible, setVisible] = useState(true); // ✅ Track visibility
+  const [visible, setVisible] = useState(false); // 🚀 Start hidden
 
   useEffect(() => {
     const handler = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
+      setVisible(true); // ✅ Show when ready to install
     };
 
     window.addEventListener("beforeinstallprompt", handler);
 
-    return () => window.removeEventListener("beforeinstallprompt", handler);
+    // Optional: hide button after install
+    window.addEventListener("appinstalled", () => {
+      setDeferredPrompt(null);
+      setVisible(false);
+    });
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+    };
   }, []);
 
   const handleInstallClick = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(() => setDeferredPrompt(null));
-    } else {
-      alert("To install, use your browser's 'Add to Home Screen' option.");
+      deferredPrompt.userChoice.then(() => {
+        setDeferredPrompt(null);
+        setVisible(false); // Hide after use
+      });
     }
   };
 
-  if (!visible) return null; // ✅ Hide when dismissed
+  if (!visible) return null; // ❌ Hide if not ready
 
   return (
     <div
